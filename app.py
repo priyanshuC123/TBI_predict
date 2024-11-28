@@ -8,11 +8,11 @@ model = joblib.load('best_model_pipeline.pkl')
 
 # Initialize Flask app
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+CORS(app, resources={r"/*": {"origins": "*"}})  # Enable CORS for all routes (can be restricted to specific origins)
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('index.html')  # Render your HTML front-end page
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -26,7 +26,7 @@ def predict():
         # List of features actually used for prediction
         required_features = [
             'Age', 'Time Since Injury (days)', 'Glasgow Coma Scale (GCS)',
-            'Midline Shift (mm)', 'Edema Volume (mL)', 'Lesion Volume (ML)'
+            'Midline Shift (mm)', 'Edema Volume (mL)', 'Lesion Volume (mL)'
         ]
 
         # Check for missing features
