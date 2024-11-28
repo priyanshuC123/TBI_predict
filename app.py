@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, render_template
+from flask_cors import CORS
 import joblib
 import numpy as np
 
@@ -7,6 +8,7 @@ model = joblib.load('best_model_pipeline.pkl')
 
 # Initialize Flask app
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 @app.route('/')
 def home():
@@ -24,7 +26,7 @@ def predict():
         # List of features actually used for prediction
         required_features = [
             'Age', 'Time Since Injury (days)', 'Glasgow Coma Scale (GCS)',
-            'Midline Shift (mm)', 'Edema Volume (mL)', 'Lesion Volume (mL)'
+            'Midline Shift (mm)', 'Edema Volume (mL)', 'Lesion Volume (ML)'
         ]
 
         # Check for missing features
